@@ -16,7 +16,6 @@
 #  limitations under the License.
 #
 #=========================================================================
-
 find_package(CUDA 10.0 REQUIRED)
 get_filename_component(SYCL_BINARY_DIR ${CMAKE_CXX_COMPILER} DIRECTORY)
 # the OpenCL include file from cuda is opencl 1.1 and it is not compatible with DPC++
@@ -37,7 +36,6 @@ find_package_handle_standard_args(cuBLAS
 	CUDA_TOOLKIT_INCLUDE
 	CUDA_cublas_LIBRARY
         CUDA_LIBRARIES
-        CUDA_CUDA_LIBRARY
         OPENCL_INCLUDE_DIR
 )
 if(NOT TARGET ONEMKL::cuBLAS::cuBLAS)
@@ -45,7 +43,7 @@ if(NOT TARGET ONEMKL::cuBLAS::cuBLAS)
   set_target_properties(ONEMKL::cuBLAS::cuBLAS PROPERTIES
       IMPORTED_LOCATION ${CUDA_cublas_LIBRARY}
       INTERFACE_INCLUDE_DIRECTORIES "${OPENCL_INCLUDE_DIR};${CUDA_TOOLKIT_INCLUDE}"
-      INTERFACE_LINK_LIBRARIES "Threads::Threads;${CUDA_CUDA_LIBRARY};${CUDA_LIBRARIES}"
+      INTERFACE_LINK_LIBRARIES "Threads::Threads;${CUDA_LIBRARIES}"
   )
 
 endif()
